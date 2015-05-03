@@ -1,0 +1,27 @@
+{
+    "variables": {
+        "gce_zone_name": "us-central1-a",
+        "source_image_name": "ubuntu-1504-vivid-v20150422",
+        "gce_network_name": "default",
+        "google_account_file": null,
+        "google_project_name": null
+    },
+    "builders": [
+        {
+            "type": "googlecompute",
+            "project_id": "{{user `google_project_name`}}",
+            "image_name": "camlistore-server {{timestamp}}",
+            "zone": "{{user `gce_zone_name`}}",
+            "network": "{{user `gce_network_name`}}",
+            "source_image": "{{user `source_image_name`}}",
+            "image_description": "Camlistore Server",
+            "account_file": "{{user `google_account_file`}}"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "script": "install-camlistore.sh"
+        }
+    ]
+}
